@@ -1,0 +1,18 @@
+/* CSS declarations go here */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  padding-top: 50px;
+  margin-bottom: 30px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.footer p {
+  text-align: center;
+}
