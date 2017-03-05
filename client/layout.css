@@ -16,3 +16,10 @@ body {
 .footer p {
   text-align: center;
 }
+
+input.error {
+  background-color: rgb(255, 231, 231);
+}
+textarea.error {
+  background-color: rgb(255, 231, 231)
+}

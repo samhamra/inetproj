@@ -1,0 +1,9 @@
+.login {
+  display: block;
+  margin-left: 40%;
+}
+.login-form {
+  width: 200px;
+  border: solid;
+  padding: 10px;
+}

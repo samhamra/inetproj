@@ -1,5 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 
 Meteor.startup(() => {
-  // code to run on server at startup
+
+  Meteor.users.remove({});
+})
+
+Meteor.methods({
+  'createAUser': function(username, password) {
+    console.log(username);
+    console.log(password);
+    Accounts.createUser({
+      username: username,
+      password: password,
+      profile: {name: username}
+    })
+  }
 });

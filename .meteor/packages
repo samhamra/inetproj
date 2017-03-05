@@ -25,3 +25,5 @@ accounts-password
 accounts-ui
 alanning:roles
 twbs:bootstrap
+themeteorchef:jquery-validation
+accounts-base
