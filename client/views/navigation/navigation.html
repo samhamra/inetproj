@@ -2,11 +2,13 @@
   <nav class="navbar navbar-inverse navbar-fixed-top mynavbar">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a href="{{pathFor route='main'}}" class="navbar-brand"> Sam </a>
+        <a href="{{pathFor route='main'}}" class="navbar-brand"> Main </a>
       </div>
       <ul class="nav navbar-nav">
-        <li>Forum</li>
-        <li>Chat</li>
+        <li><a href="{{pathFor route='forum'}}">Forum</a></li>
+        {{# if currentUser}}
+          <li><a href="{{pathFor route='chat'}}">Chat</a></li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#if currentUser}}
