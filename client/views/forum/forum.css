@@ -1,0 +1,8 @@
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+.forum .forum-media-list li {
+  display:block;
+  margin: 0 auto;
+}

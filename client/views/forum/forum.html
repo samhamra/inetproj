@@ -1,3 +1,60 @@
 <template name="forum">
   <h1>Forum</h1>
+  <button type="button" class="createTopic"> New topic</button>
+  <table>
+    <tr>
+      <th>Topic</th>
+      <th>Author</th>
+      <th>Created At</th>
+      <th>Posts</th>
+      <th>Views</th>
+    </tr>
+    {{#each topics}}
+    <tr>
+      <td> <a href="{{pathFor route='topic'}}">{{title}}</a></td>
+      <td> {{author.username}}</td>
+      <td> {{createdAt}}</td>
+      <td>{{views}}</td>
+      <td> </td>
+    </tr>
+    {{/each}}
+  </table>
+</template>
+
+<template name="createTopic">
+  <form class="newTopic">
+    <p>Title:</p><input type="text" name="title">
+    <p>Message: </p> <textarea name="message"></textarea>
+    <input type="submit" value="Submit">
+  </form>
+</template>
+
+<template name="topic">
+  <ul class="media-list forum">
+    <li class="media well">
+      <div class="pull-left user-info">
+
+      </div>
+      {{#if isAuthor}}
+      <div class="pull-right">
+        <button type="button" class="deleteTopic"> Delete Topic</button>
+        <button type="button" class="editTopicButton"> Edit Topic</button>
+      </div>
+      {{/if}}
+      <div class="media-body">
+        <div class="forum-post-panel btn-group btn-group-xs topic" style="width: 90%">
+          <form class="editTopicForm hidden" style="width: 100%; height: 200px">
+            <p style="text-align: center"> Edit Message: </p> <textarea name="editMessage" style="width: 100%; height: 70%" required>{{message}}</textarea>
+            <input type="submit" value="Save" style="margin: 0 auto; display: table">
+          </form>
+          <p> Title: {{title}}</p>
+          <p>Posted: {{createdAt}}  </p>
+          {{#if  isTopicEdited}}
+          <p>Edited: {{edited}} </p>
+          {{/if}}
+          <p> Message: {{message}} </p>
+        </div>
+      </div>
+    </li>
+  </ul>
 </template>

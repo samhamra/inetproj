@@ -10,7 +10,6 @@ Template.login.onRendered(function(){
       var username = $('[name=username]').val();
       var password = $('[name=password]').val();
 
-
       Meteor.loginWithPassword(username, password, function(error) {
         if(error) {
           if(error.reason == 'User not found') {
@@ -19,7 +18,13 @@ Template.login.onRendered(function(){
             validator.showErrors({password: error.reason})
           }
         } else {
-          Router.go('account');
+          var currentRoute = Router.current().route.getName();
+          console.log(currentRoute);
+          if(currentRoute === 'createTopic') {
+            Router.go('createTopic');
+          } else {
+            Router.go('account');
+          }
         }
       })
     },
