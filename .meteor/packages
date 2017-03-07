@@ -27,3 +27,5 @@ twbs:bootstrap
 themeteorchef:jquery-validation
 accounts-base
 mizzao:user-status
+meteorhacks:aggregate
+panter:publish-array
