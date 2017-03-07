@@ -44,8 +44,6 @@ Meteor.methods({
     Topics.update({_id: topicId}, {$pull: {posts: {_id: postId}}})
   },
   'editPost': function(topicId, postId, message) {
-
-
     Topics.update({_id: topicId, 'posts._id': postId}, {$set: {'posts.$.message': message, 'posts.$.edited': new Date()}})
   }
 });

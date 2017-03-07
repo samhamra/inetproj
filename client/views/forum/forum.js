@@ -10,7 +10,6 @@ Template.registerHelper('isOnline', function(user) {
   } else {
     return false;
   }
-
 })
 
 Template.forum.events({
