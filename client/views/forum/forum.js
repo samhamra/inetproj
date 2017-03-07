@@ -40,7 +40,7 @@ Template.createTopic.onRendered(function() {
         required: true,
         maxlength: 50
       },
-      textarea: {
+      message: {
         required: true,
         maxlength: 400
       }
@@ -127,7 +127,7 @@ Template.topic.events({
     target.children("p").addClass("hidden");
     target.children("form").removeClass("hidden");
     $(event.target).addClass("hidden");
-    $(".createPost").addClass("hidden");
+    $(".newPost").addClass("hidden");
   },
   'submit .editPostForm':  function() {
     event.preventDefault();
@@ -141,7 +141,7 @@ Template.topic.events({
     $(event.target).siblings("p").removeClass("hidden");
     $(event.target).addClass("hidden");
     $(".editPostButton").removeClass("hidden");
-    $('.createPost').removeClass("hidden");
+    $('.newPost').removeClass("hidden");
   }
 })
 
@@ -153,4 +153,36 @@ Template.createPost.events({
     event.target.post.value= "";
     Meteor.call('createPost', user, message, this._id);
   }
+})
+
+Template.createPost.onRendered(function () {
+  $('.newPost').validate({
+    rules: {
+      post: {
+        required: true
+      }
+    },
+    errorPlacement: function(error, element) {
+      element.attr("placeholder", error.text())
+    }
+  })
+})
+
+Template.topic.onRendered(function() {
+  $('editTopicForm').validate({
+    rules: {
+      editMessage: {required: true}
+    },
+    errorPlacement: function(error, element) {
+      element.attr("placeholder",error.text())
+    }
+  });
+  $('editPostForm').validate({
+    rules: {
+      editMessage: {required: true}
+    },
+    errorPlacement: function(error, element) {
+      element.attr("placeholder",error.text())
+    }
+  });
 })
