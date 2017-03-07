@@ -1,6 +1,18 @@
 Template.registerHelper('getUsername', function(user) {
   let username = user.username;
 });
+
+Template.registerHelper('isOnline', function(user) {
+  console.log("isonline?")
+  var online = Meteor.users.findOne({_id: user._id, "status.online": true})
+  if(online) {
+    return true
+  } else {
+    return false;
+  }
+
+})
+
 Template.forum.events({
   'click .createTopic': function() {
     Router.go('createTopic')

@@ -33,6 +33,11 @@
   <ul class="media-list forum">
     <li class="media well">
       <div class="pull-left user-info">
+        {{#if isOnline author}}
+        <p>Online</p>
+        {{else}}
+        <p> Offline</p>
+        {{/if}}
         <strong>{{author.username}}</strong>
       </div>
       {{#if isAuthor}}
@@ -60,6 +65,11 @@
     <li class="media well post">
       <div class="pull-left user-info">
         <strong>{{author.username}}</strong>
+        {{#if isOnline author}}
+        <p>Online</p>
+        {{else}}
+        <p> Offline</p>
+        {{/if}}
       </div>
       {{#if isAuthor}}
       <div class="pull-right">
