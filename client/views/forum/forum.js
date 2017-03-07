@@ -75,6 +75,14 @@ Template.topic.helpers({
     } else {
       return false
     }
+  },
+  isPostEdited: function() {
+    var isEdited = Topics.findOne({_id: Template.parentData()._id, 'posts._id': this._id, 'posts.edited': {$exists: true}})
+    if(isEdited) {
+      return true
+    } else {
+      return false
+    }
   }
 })
 
@@ -109,6 +117,31 @@ Template.topic.events({
     $('.topic').children("p").removeClass("hidden");
     $('.editTopicButton').removeClass("hidden");
     $('.editTopicForm').addClass("hidden");
+  },
+  'click .deletePostButton': function() {
+    Meteor.call('deletePost', Template.parentData()._id, this._id);
+    Router.go('topic', {_id: Template.parentData()._id})
+  },
+  'click .editPostButton': function() {
+    var target= $(event.target).parent().siblings('.media-body').children()
+    target.children("p").addClass("hidden");
+    target.children("form").removeClass("hidden");
+    $(event.target).addClass("hidden");
+    $(".createPost").addClass("hidden");
+  },
+  'submit .editPostForm':  function() {
+    event.preventDefault();
+    var message = event.target.editMessage.value;
+    Meteor.call('editPost', Template.parentData()._id, this._id, message, function(error) {
+      if(error ) {
+        console.log("error");
+        Router.go('main');
+      }
+    });
+    $(event.target).siblings("p").removeClass("hidden");
+    $(event.target).addClass("hidden");
+    $(".editPostButton").removeClass("hidden");
+    $('.createPost').removeClass("hidden");
   }
 })
 

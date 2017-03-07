@@ -57,7 +57,7 @@
       </div>
     </li>
     {{#each posts}}
-    <li class="media well">
+    <li class="media well post">
       <div class="pull-left user-info">
         <strong>{{author.username}}</strong>
       </div>
@@ -70,12 +70,14 @@
       {{/if}}
       <div class="media-body">
         <div class="forum-post-panel btn-group btn-group-xs post" style="width: 90%">
-          <form class="editPost hidden" style="width: 100%; height: 200px">
+          <form class="editPostForm hidden" style="width: 100%; height: 200px">
             <p style="text-align: center"> Edit Message: </p> <textarea name="editMessage" style="width: 100%; height: 70%" required> {{message}}</textarea>
+            <input type="submit" value="Save" style="margin: 0 auto; display: table">
           </form>
           <p>Posted: {{createdAt}}</p>
-
-          <p>Edited:</p>
+          {{#if isPostEdited}}
+          <p>Edited: {{edited}}</p>
+          {{/if}}
           <p>Message: {{message}}</p>
         </div>
       </div>
@@ -89,7 +91,7 @@
   {{/if}}
 </template>
 
-<template name="createPost">
+<template class ="createPost" name="createPost">
   <form class="newPost" style="width: 100%; height: 200px; border: solid; padding: 10px">
     <p>Message: </p> <textarea name="post" style="width: 100%; height: 70%"></textarea>
     <input style="margin: 0 auto; display: table" type="submit" value="Submit">

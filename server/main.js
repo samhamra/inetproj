@@ -35,9 +35,17 @@ Meteor.methods({
     console.log(hej);
   },
   'updateViewCount': function(topicId) {
-    Topics.update({_id: topicId}, {$inc: {'views': 1}})
+    Topics.update({_id: topicId}, {$inc: {views: 1}})
   },
   'createPost': function(user, message, topicId) {
     Topics.update({_id: topicId}, {$push: {posts: {_id: Random.id(), message: message, author: user, createdAt: new Date()}}})
+  },
+  'deletePost': function(topicId, postId) {
+    Topics.update({_id: topicId}, {$pull: {posts: {_id: postId}}})
+  },
+  'editPost': function(topicId, postId, message) {
+
+
+    Topics.update({_id: topicId, 'posts._id': postId}, {$set: {'posts.$.message': message, 'posts.$.edited': new Date()}})
   }
 });
