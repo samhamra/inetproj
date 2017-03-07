@@ -54,7 +54,7 @@ Template.topic.helpers({
       // the user is ready
       if (Meteor.user()) {
         // the user is logged in
-        if (Meteor.user() && Meteor.user().roles) {
+        if (Meteor.user()._id && Meteor.user().roles) {
           if(Roles.userIsInRole(Meteor.user()._id, ['admin'])) {
             return true;
           } else {
@@ -65,10 +65,9 @@ Template.topic.helpers({
     }
     return false;
   },
-
   isTopicEdited: function() {
-    var isEdited = Topics.find({_id: this._id, edited: {"$exists": true}})
-    if(isEdited) {
+    var isEdited = Topics.findOne({_id: this._id, edited: {$exists: true}})
+    if(isEdited) {  
       return true
     } else {
       return false
@@ -107,5 +106,15 @@ Template.topic.events({
     $('.topic').children("p").removeClass("hidden");
     $('.editTopicButton').removeClass("hidden");
     $('.editTopicForm').addClass("hidden");
+  }
+})
+
+Template.createPost.events({
+  'submit form': function(event) {
+    event.preventDefault();
+    var user = Meteor.user();
+    var message = event.target.post.value;
+    event.target.post.value= "";
+    Meteor.call('createPost', user, message, this._id);
   }
 })

@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-
+import { Random } from 'meteor/random'
 Meteor.startup(() => {
 
   Meteor.users.remove({});
@@ -36,5 +36,8 @@ Meteor.methods({
   },
   'updateViewCount': function(topicId) {
     Topics.update({_id: topicId}, {$inc: {'views': 1}})
+  },
+  'createPost': function(user, message, topicId) {
+    Topics.update({_id: topicId}, {$push: {posts: {_id: Random.id(), message: message, author: user, createdAt: new Date()}}})
   }
 });
