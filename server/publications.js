@@ -4,6 +4,3 @@ Meteor.publish('topics', function() {
 Meteor.publish('topic', function(currentTopic) {
   return Topics.find({_id: currentTopic});
 })
-Meteor.publish('users', function() {
-  return Meteor.users.find();
-})

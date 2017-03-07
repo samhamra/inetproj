@@ -9,6 +9,9 @@ Template.forum.events({
 Template.forum.helpers({
   topics: function() {
     return Topics.find().fetch();
+  },
+  postCount: function() {
+    return this.posts.length;
   }
 })
 
@@ -67,7 +70,7 @@ Template.topic.helpers({
   },
   isTopicEdited: function() {
     var isEdited = Topics.findOne({_id: this._id, edited: {$exists: true}})
-    if(isEdited) {  
+    if(isEdited) {
       return true
     } else {
       return false
