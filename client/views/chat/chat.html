@@ -1,16 +1,23 @@
 <template name="chat">
   <h1>Chat</h1>
   <ul>
-  {{#each Users}}
+  {{#each onlineUsers}}
   <li>
   <p>{{username}}</p>
 </li>
   {{/each}}
 </ul>
+ {{#with mainRoom}}
+ {{#each messages}}
+ <p>{{message}} </p>
+ {{/each}}
+ {{/with}}
+
+
 
 
 <form name="sendMessage">
-  <p>Message:</p><textarea name="message" value="message" type="text"></textarea>
-  <input type="button" value="Send">
+  <p>Message:</p><textarea name="message" type="text"></textarea>
+  <input type="submit" value="Send">
 </form>
 </template>

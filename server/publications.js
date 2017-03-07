@@ -7,3 +7,6 @@ Meteor.publish('topic', function(currentTopic) {
 Meteor.publish('onlineUsers', function() {
   return Meteor.users.find({"status.online": true})
 })
+Meteor.publish('mainChatRoom', function() {
+  return ChatRooms.find({room: "main"});
+})

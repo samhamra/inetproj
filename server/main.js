@@ -9,6 +9,9 @@ Meteor.startup(() => {
     password: 'admin',
     profile: {name: 'GOD'}
   })
+  ChatRooms.remove({})
+  ChatRooms.insert({room: 'main', messages: []})
+  ChatRooms.insert({room: 'room72', messages: []})
   Roles.setUserRoles(uid, 'admin');
 })
 
@@ -43,7 +46,11 @@ Meteor.methods({
   'deletePost': function(topicId, postId) {
     Topics.update({_id: topicId}, {$pull: {posts: {_id: postId}}})
   },
-  'editPost': function(topicId, postId, message) {
+  'editPost': function(topicId, postId, message){
     Topics.update({_id: topicId, 'posts._id': postId}, {$set: {'posts.$.message': message, 'posts.$.edited': new Date()}})
+  },
+  'sendChatMessage': function(user, room, message) {
+    ChatRooms.update({room: 'main'}, {$push: {messages: {_id: Random.id(), message: message, user: user._id, createdAt: new Date()}}})
+    console.log("ChatRooms updated")
   }
 });
