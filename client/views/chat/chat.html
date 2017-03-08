@@ -7,17 +7,16 @@
 </li>
   {{/each}}
 </ul>
- {{#with mainRoom}}
- {{#each messages}}
- <p>{{message}} </p>
- {{/each}}
- {{/with}}
 
 
 
 
 <form name="sendMessage">
-  <p>Message:</p><textarea name="message" type="text"></textarea>
+  <p>Message:</p><textarea class="message" name="message" type="text"></textarea>
   <input type="submit" value="Send">
 </form>
+
+{{#each testing}}
+<p>{{username}}: {{message}}</p>
+{{/each}}
 </template>

@@ -1,6 +1,10 @@
 import { Meteor } from 'meteor/meteor';
-import { Random } from 'meteor/random'
+import { Random } from 'meteor/random';
+import Streamer from '/imports/stream.js';
 Meteor.startup(() => {
+Streamer.allowRead('all');
+Streamer.allowWrite('all');
+Streamer.allowEmit('all');
 
   Meteor.users.remove({});
   Topics.remove({});
@@ -13,6 +17,7 @@ Meteor.startup(() => {
   ChatRooms.insert({room: 'main', messages: []})
   ChatRooms.insert({room: 'room72', messages: []})
   Roles.setUserRoles(uid, 'admin');
+
 })
 
 Meteor.methods({
