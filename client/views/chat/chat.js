@@ -10,6 +10,7 @@ Template.chat.events({
     event.preventDefault();
     var message = event.target.message.value;
     event.target.message.value = "";
+    console.log("emit");
     Streamer.emit('chat', message, Meteor.user().username);
   },
   'keypress textarea': function(event) {
@@ -20,15 +21,31 @@ Template.chat.events({
   }
 })
 
-Template.chat.onRendered(function() {
+Template.chat.onCreated(function() {
+
   chatMessageCollection.remove({})
 
   Streamer.on('chat', function(message, username) {
-    var currentRoute = Router.current().route.getName();
-    if(currentRoute === 'chat') {
       chatMessageCollection.insert({message: message, username: username})
-      console.log("streamed")
-      console.log(message);
-    }
+      console.log("ok")
+      var chat = document.getElementById("chatboard");
+      chat.scrollTop = chat.scrollHeight - chat.clientHeight;
   })
+  Meteor.call("joinChat", Meteor.userId())
+})
+Template.chat.onDestroyed(function() {
+  Streamer.stop('chat')
+  Meteor.call("leaveChat", Meteor.userId())
+
+})
+
+Template.chat.onRendered(function() {
+  setInterval(function() {
+  var chat = document.getElementById("chatboard");
+  console.log("ok")
+  var isScrolledToBottom = chat.scrollHeight - chat.clientHeight <= chat.scrollTop;
+  console.log(isScrolledToBottom)
+  if(isScrolledToBottom)
+      chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+  }, 500)
 })

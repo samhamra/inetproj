@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import Streamer from '/imports/stream.js';
 Meteor.startup(() => {
-Streamer.allowRead('all');
-Streamer.allowWrite('all');
-Streamer.allowEmit('all');
+Streamer.allowRead('logged');
+Streamer.allowWrite('logged');
+Streamer.allowEmit('logged');
 
   Meteor.users.remove({});
   Topics.remove({});
@@ -13,11 +13,7 @@ Streamer.allowEmit('all');
     password: 'admin',
     profile: {name: 'GOD'}
   })
-  ChatRooms.remove({})
-  ChatRooms.insert({room: 'main', messages: []})
-  ChatRooms.insert({room: 'room72', messages: []})
   Roles.setUserRoles(uid, 'admin');
-
 })
 
 Meteor.methods({
@@ -54,8 +50,18 @@ Meteor.methods({
   'editPost': function(topicId, postId, message){
     Topics.update({_id: topicId, 'posts._id': postId}, {$set: {'posts.$.message': message, 'posts.$.edited': new Date()}})
   },
-  'sendChatMessage': function(user, room, message) {
-    ChatRooms.update({room: 'main'}, {$push: {messages: {_id: Random.id(), message: message, user: user._id, createdAt: new Date()}}})
-    console.log("ChatRooms updated")
+  'joinChat': function(userId) {
+    Meteor.users.update(userId, {
+      $set: {
+        route: "chat"
+      }
+    })
+  },
+  'leaveChat': function(userId) {
+    Meteor.users.update(userId, {
+      $set: {
+        route: ""
+      }
+    })
   }
 });
